@@ -15,8 +15,8 @@
    (Class/forName "[J") (fn [s] (long-array s))
    (Class/forName "[S") (fn [s] (short-array s))
    (Class/forName "[B") (fn [s] (byte-array s))
-   (Class/forName "[C") (fn [s] (char-array s))   
-   (Class/forName "[Z") (fn [s] (boolean-array s)) 
+   (Class/forName "[C") (fn [s] (char-array s))
+   (Class/forName "[Z") (fn [s] (boolean-array s))
    (Class/forName "[F") (fn [s] (float-array s))
    (Class/forName "[D") (fn [s] (double-array s))
    })
@@ -27,7 +27,7 @@
 (defn- get-reflection-info
   "Extract from the cache the required item for the given class."
   [java-class item]
-  (try 
+  (try
     (let [hashcode (System/identityHashCode java-class)]
       (if-let [item-cached (item (get @*reflection-cache* hashcode))]
         item-cached
@@ -65,7 +65,7 @@
       (cond
         fn-array (fn-array this)
         (has-interface? target-class java.util.List) (doall this)
-        (has-interface? target-class java.util.Map) (doall this)       
+        (has-interface? target-class java.util.Map) (doall this)
         :else (object-array (doall this))))))
 
 (extend-type clojure.lang.PersistentVector
@@ -215,10 +215,10 @@
 (defn find-constructors
   "Find constructors matching a signature for the given args."
   [java-class args]
-  (try 
+  (try
     (loop [cl java-class ctors (transient [])]
       (if (= cl Object) (persistent! ctors)
-        (recur (get-reflection-info cl :superclass) 
+        (recur (get-reflection-info cl :superclass)
                (reduce #(if (nil? %2) %1 (conj! %1 %2)) ctors
                        (map (fn [ctor]
                               (if (= (.getDeclaringClass ctor) cl)

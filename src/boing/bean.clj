@@ -10,7 +10,7 @@
   (:require [clojure.string :as s])
   (:gen-class :name boing.Bean
               :methods [#^{:static true} [loadBeandefs [Object] void]
-                        #^{:static true} [loadBeandefs [Object Object] void]                  
+                        #^{:static true} [loadBeandefs [Object Object] void]
                         #^{:static true} [createBean [String] Object]
                         #^{:static true} [createBean [String java.util.List] Object]
                         #^{:static true} [createBean [String java.util.List java.util.List] Object]
@@ -102,7 +102,7 @@
   [id beandef instance]
   (if @*debug-mode* (print-debug "Registering singleton: %s %s" id (.hashCode instance)))
   (swap! *singletons* #(merge %1 %2) { (singleton-name id) {:beandef beandef :instance instance}}))
- 
+
 (defn- property-def
   "Define a property value to be set at instantiation time"
   [bean-id java-class setters properties pname]
@@ -158,7 +158,7 @@
       (if (nil? constructor) (throw (NoSuchMethodException. (format "No constructor found for bean %s matching %s" bean-name c-args)))
         (add-beandef beandef))
       beandef)
-    (catch NoSuchMethodException e# (throw e#))   
+    (catch NoSuchMethodException e# (throw e#))
     (catch Exception e# (println (format "Error detected in bean definitions %s: %s" bean-name (.getMessage e#)))
       (print-stack-trace e#)
       (root-cause e#) (throw (Exception. (.getCause e#)))))))
@@ -177,7 +177,7 @@
   ([bean-id property-name]
     (if-let [bean-bindings (bean-id *runtime-overrides*)]
       (property-name bean-bindings))))
- 
+
 (defn- apply-setter
   "Apply a setter to an allocated bean, We recurse through create-bean but the recursion level
    is acceptable. Bean hierarchies are not very deep most of the time and the stack should not blow out.
@@ -216,7 +216,7 @@
      (catch Exception e#
        (println (format "Failed invoking %s step on instance of bean %s in context %s error: %s"
                         ~step id# context# (.getMessage e#)))
-       (print-cause-trace e#) (throw (Exception. (.getCause e#))))))) 
+       (print-cause-trace e#) (throw (Exception. (.getCause e#)))))))
 
 (defn- allocate-singleton
   "Test for singleton and instantiate it if necessary."
@@ -259,7 +259,7 @@
    The current context can be switched using the with-context macro.
    if no context is specified, the bean definition is pulled from the :default context"
   ([beandef-or-id] (create-bean beandef-or-id {} {}))
-  
+
   ([beandef-or-id bean-overrides] (create-bean beandef-or-id bean-overrides {}))
 
   ([beandef-or-id bean-overrides global-overrides]
@@ -276,7 +276,7 @@
   (let [{:keys [id context java-class mode override-class comments]} beandef]
     (println (format "Bean %s  context: %s  mode: %s  class: %s  class override: %s\nComments: %s"
                      id context mode java-class override-class comments))))
-  
+
 (defn bean-info
   "Dump information of a specific bean"
   ([id]
@@ -366,9 +366,9 @@
         (instance? (Class/forName "[Ljava.lang.String;") bean-resources) ;; An array of file names or string URLs
         (doall (map #(load-and-eval %) bean-resources))
         (instance? (Class/forName "[Ljava.net.URL;") bean-resources) ;; An array of URLs
-        (doall (map #(load-and-eval %) bean-resources)) 
-        :else (throw (Exception. (format "Cannot load Boing definitions from %s" bean-resources)))))  
-  
+        (doall (map #(load-and-eval %) bean-resources))
+        :else (throw (Exception. (format "Cannot load Boing definitions from %s" bean-resources)))))
+
 (defn -loadBeandefs
   "Load bean definitions from a clojure resource type.
    The resource can be a file in the class path or a URL.

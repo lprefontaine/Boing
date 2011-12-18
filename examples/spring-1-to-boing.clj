@@ -12,7 +12,7 @@
    XML counterpart. (109 lines versus > 1900 lines) and much more dynamic.
 
    In this example, we are using the default context (:default)"
-  
+
   (:use [boing.bean] [boing.context] [boing.resource]
         [clojure.contrib.def]))
 
@@ -36,21 +36,21 @@
 	(defbean :processorContextBean "higiebus.adaptors.hms.uvis.events.processors.ProcessorContext"
 	  :s-vals {:busCache (defbean :busCacheBean "higiebus.bus.cache.BusCacheFactory"
 	                       :post #(.createInstance %) :class-override higiebus.bus.cache.BusCache)})
-	
+
 	(defbean :alertProducerBean "higiebus.tools.jms.Producer"
 	  :s-vals {:subject "HIGIEBUS.ALERT" :connectionFactory :connectionFactoryBean :transacted false :name "HIGIEBUSCore" :ackMode "AUTO_ACKNOWLEDGE"})
-	
+
 	(defbean :hmsParametersBean "higiebus.adaptors.hms.uvis.HMSUvisParameters" :mode :singleton
 	  :s-vals {:senderApplicationName "HIGIEBUS" :senderApplicationInstance "PROTOTYPE"
 	           :radiologyAreas {28 "ECHO" 21 "RX-GA" 22 "RX-PA" 27 "TORE"}
 	           :radiologyAnswersExamDescriptions
 	           { 897 "Examen spécifiques" 878 "DONNÉES PERTINENTES ET/OU SIGNES CLINIQUES"
-	            901 "DONNÉES PERTINENTES ET/OU SIGNES CLINIQUES" 922 "DONNÉES PERTINENTES ET/OU SIGNES CLINIQUES" 
+	            901 "DONNÉES PERTINENTES ET/OU SIGNES CLINIQUES" 922 "DONNÉES PERTINENTES ET/OU SIGNES CLINIQUES"
 	            1809 "DONNÉES PERTINENTES ET/OU SIGNES CLINIQUES"}
 	           :requestUpdateStatusFilter
 	           { "NEW" false "REQUESTED" true "ACCEPTED" true "MODIFIED" true "SCHEDULED" true "PRELIMINARY" true "CANCELLED" false
 	            "REJECTED" true "COMPLETE" true "AMENDED" true "PERFORMED" true "ADDENDED" true}})
-	
+
 	(defbean :HMSPatientDaoBean "higiebus.adaptors.hms.uvis.dao.UvisPatientDao")
 	(defbean :HMSClientDaoBean "higiebus.adaptors.hms.uvis.dao.UvisClientDao")
 	(defbean :HMSOrderDaoBean "higiebus.adaptors.hms.uvis.dao.UvisOrderDao")
@@ -61,13 +61,13 @@
 	(defbean :HMSRequestAnswerDaoBean "higiebus.adaptors.hms.uvis.dao.UvisRequestAnswerDao")
 	(defbean :HMSDiagnosisDaoBean "higiebus.adaptors.hms.uvis.dao.UvisDiagnosisDao")
 	(defbean :HMSHospitalCensusDaoBean "higiebus.adaptors.hms.uvis.dao.UvisHospitalCensusDao")
-	(defbean :hmsCacheBean "higiebus.adaptors.hms.cache.HMSCacheFactory" 
+	(defbean :hmsCacheBean "higiebus.adaptors.hms.cache.HMSCacheFactory"
 	  :class-override higiebus.adaptors.hms.cache.HMSCache :mode :singleton :post #(.createInstance %))
-	
+
 	(defn-memo list-mappings
 	  "Load Hibernate mappings from the corresponding jar file."
 	  [] (enum-resources "uvis/dao/mappings" :from-class higiebus.adaptors.hms.HMSParameters :pattern  "uvis/dao/mappings/.*[.]xml"))
-	
+
 	(defbean :hmsSessionFactoryBean "org.springframework.orm.hibernate3.LocalSessionFactoryBean"
 	  :mode :singleton
 	  :s-vals {:dataSource
@@ -99,8 +99,8 @@
 	           :mappingResources #(list-mappings)}
 	  :class-override org.hibernate.SessionFactory
 	  :post      ;; This Spring object implements the Factory interface. getObject returns an new object from the factory
-	  #(.getObject %)) 
-	
+	  #(.getObject %))
+
 	;; Define a bunch of similar top level beans, these are at the top of the hierarchy
 	(let [beans ["AdmitPatientProcessor" ["UpdatePatientProcessor" "UpdatePatientInformationProcessor"]
 	             "RequestProcessor" "ObservationProcessor" "UpdateVisitsProcessor" ["CensusProcessorBean" "HospitalCensusProcessor"]]]

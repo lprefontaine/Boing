@@ -14,7 +14,7 @@
     (defbean :HMSRequestAnswerDaoBean "higiebus.adaptors.hms.uvis.dao.UvisRequestAnswerDao")
     (defbean :HMSDiagnosisDaoBean "higiebus.adaptors.hms.uvis.dao.UvisDiagnosisDao")
     (defbean :HMSHospitalCensusDaoBean "higiebus.adaptors.hms.uvis.dao.UvisHospitalCensusDao")
-    (defbean :hmsCacheBean "higiebus.adaptors.hms.cache.HMSCacheFactory" 
+    (defbean :hmsCacheBean "higiebus.adaptors.hms.cache.HMSCacheFactory"
       :class-override higiebus.adaptors.hms.cache.HMSCache :mode :singleton :post #(.createInstance %)))
   (catch Exception e# (print-cause-trace e#) (throw e#)))
 

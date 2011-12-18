@@ -154,7 +154,7 @@
       "Testing singleton creation using setters"
       (let [singleton (defbean :test-singleton-1 boing.test.SimpleClass :mode :singleton
                          :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
-            alien-singleton 
+            alien-singleton
             (with-context :my-ctx
               (defbean :test-singleton-1 boing.test.SimpleClass :mode :singleton
                 :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true}))]
@@ -167,7 +167,7 @@
       "Testing singleton creation using constructor"
       (let [singleton (defbean :test-singleton-1 boing.test.SimpleClass :mode :singleton
                          :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true])
-            alien-singleton 
+            alien-singleton
             (with-context :my-ctx
               (defbean :test-singleton-1 boing.test.SimpleClass :mode :singleton
                 :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true]))]
@@ -313,7 +313,7 @@
                 (.put "byte value" (.getByteVal this))
                 (.put "long value" (.getLongVal this))))
             :else this)))
-      (with-context ctx 
+      (with-context ctx
         (let [first-bean (defbean :test-bean-1 boing.test.SimpleClass
                            :s-vals {:byteVal (byte 1) :intVal (int 3) :longVal (long 4)})
               second-bean (defbean :test-bean-2 boing.test.SimpleClass

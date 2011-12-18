@@ -1,7 +1,7 @@
 package boing.test;
 
 public class SimpleClassParent {
-	
+
 	@SuppressWarnings("unused")
 	private int privateParentVal;
 

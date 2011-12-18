@@ -44,8 +44,8 @@
   "Registers a new empty bean context if it does not exists and returns it.
    Otherwise returns the context found."
   ([ctx-id] (add-context ctx-id {}))
-  
-  ([ctx-id aliases] 
+
+  ([ctx-id aliases]
     (if-let [ctx (context? (keyword ctx-id))] ctx
       (do (swap! *contexts* #(merge %1 %2) { (keyword ctx-id) (Context. ctx-id aliases {})})
         (get-context (keyword ctx-id))))))
@@ -76,4 +76,4 @@
 
 
 
-    
+

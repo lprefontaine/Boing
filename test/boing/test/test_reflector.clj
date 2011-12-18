@@ -11,7 +11,7 @@
             :floatVal "setFloatVal", :intVal "setIntVal", :listVal "setListVal", :longVal "setLongVal",
             :mapVal "setMapVal", :objectVal "setObjectVal", :privateParentVal "setPrivateParentVal",
             :props "setProps", :shortVal "setShortVal", :stringVal "setStringVal", :vector "setVector"} ))
-    
+
     (is (= (into [] (sort (map #(.getName %) (find-methods boing.test.SimpleClass [(int 1)]))))
            ["setIntVal" "setPrivateParentVal"]))
     (is (= (into [] (sort (map #(.getName %) (find-methods boing.test.SimpleClass [Integer] "setPrivateParentVal"))))

@@ -7,7 +7,7 @@
       (with-context :my-ctx
 	      (let [singleton (defbean :test-bean-1 boing.test.SimpleClass :mode :singleton
 	                         :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true])
-	            alien-singleton 
+	            alien-singleton
 	            (with-context :my-ctx
 	              (defbean :test-bean-1 boing.test.SimpleClass :mode :singleton
 	                :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true}))]
@@ -21,7 +21,7 @@
     (let [first-bean (defbean :test-bean-1 boing.test.SimpleClass
                          :properties {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
           second-bean (defbean :test-bean-2 boing.test.SimpleClass
-                          :properties {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})]      
+                          :properties {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})]
       (is (= (.hashCode first-bean) (.hashCode (find-beandef :test-bean-1))))
       (is (= first-bean (find-beandef :test-bean-1)))
       (is (= (get-bean-ids) [:test-bean-1 :test-bean-2])))))
@@ -32,7 +32,7 @@
       (let [first-bean (defbean :test-bean-1 boing.test.SimpleClass
                          :properties {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
             second-bean (defbean :test-bean-2 boing.test.SimpleClass
-                          :properties {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})]      
+                          :properties {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})]
         (is (= (.hashCode first-bean) (.hashCode (find-beandef :test-bean-1))))
         (is (= first-bean (find-beandef :test-bean-1)))
         (is (= (get-bean-ids) [:test-bean-1 :test-bean-2])))

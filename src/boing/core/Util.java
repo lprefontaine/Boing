@@ -16,7 +16,7 @@ public class Util {
 		primitives.put(Character.class,char.class);
 		primitives.put(Boolean.class,boolean.class);
 	};
-	
+
 	static public Class<?> getPrimitiveClass(Class<Object> cl) {
 		Class<?> clp = primitives.get(cl);
 		if (clp != null) return clp;

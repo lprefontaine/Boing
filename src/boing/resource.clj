@@ -32,7 +32,7 @@
     (try
       (if (nil? from-class)
         (if-let [url (find-url respath)]
-          (cond (= (.getProtocol url) "file") 
+          (cond (= (.getProtocol url) "file")
                 (persistent! (reduce #(if (nil? %1) %1 (conj! %1 %2)) (transient []) (-> (File. (.toURI url)) (.list))))
                 :else (throw (UnsupportedOperationException.
                                (format "Cannot list files for url %s" url))))
@@ -52,7 +52,7 @@
    if a class is provided, use it to find the resource specifically
    in the class resource container (jar, class folder, ...."
   ([respath & {:keys [from-class]}]
-    (try 
+    (try
       (if-let [resource-url (find-url respath)]
         (cond (nil? from-class)
               (input-stream resource-url)
@@ -63,18 +63,18 @@
 (defn load-properties
   "Load a property resource file as a map."
   ([respath & {:keys [from-class]}]
-    (try 
+    (try
       (if-let [resource-url (find-url respath)]
         (with-open [stream (get-input-stream resource-url :from-class from-class)]
           (let [properties (doto (Properties.) (.load stream))]
-            (persistent! (reduce conj! (transient {})  (map (fn [e] { (keyword (key e)) (val e)}) properties)))))        
+            (persistent! (reduce conj! (transient {})  (map (fn [e] { (keyword (key e)) (val e)}) properties)))))
         {})
       (catch Exception e# (print-cause-trace e#) (throw e#)))))
-     
+
 (defn load-text-resource
   "Load a resource file as a string."
   [respath & {:keys [encoding from-class]}]
-    (try 
+    (try
       (if-let [resource-url (find-url respath)]
         (with-open [rdr (reader (get-input-stream resource-url :from-class from-class))]
           (reduce #(str %1 %2) "" (line-seq rdr))))
@@ -98,5 +98,5 @@
           (spit "/tmp/failed-load.clj" code)
           (throw (Exception. (format "Failed loading %s: %s: %s characters" respath (.getMessage e#) (count code)))))))))
 
- 
-      
+
+

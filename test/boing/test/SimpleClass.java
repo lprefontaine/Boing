@@ -9,7 +9,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 public class SimpleClass extends SimpleClassParent{
 	private static String COLON = ":";
-	
+
 	@SuppressWarnings("unused")
 	private byte byteVal;
 	@SuppressWarnings("unused")
@@ -25,7 +25,7 @@ public class SimpleClass extends SimpleClassParent{
 	@SuppressWarnings("unused")
 	private char charVal = 0;
 	@SuppressWarnings("unused")
-	private boolean boolVal;	
+	private boolean boolVal;
 	@SuppressWarnings("unused")
 	private String stringVal;
 	@SuppressWarnings("unused")
@@ -38,7 +38,7 @@ public class SimpleClass extends SimpleClassParent{
 	private Properties props;
 	@SuppressWarnings("unused")
 	private Vector vector;
-	
+
 	public void setVector(Vector vector) {
 		this.vector = vector;
 	}
@@ -50,7 +50,7 @@ public class SimpleClass extends SimpleClassParent{
 	public long getLongVal() {
 		return longVal;
 	}
-	
+
 	public void setProps(Properties props) {
 		this.props = props;
 	}
@@ -67,11 +67,11 @@ public class SimpleClass extends SimpleClassParent{
 		boolVal = true;
 		System.out.println("In init() of class SimpleClass");
 	}
-	
+
 	public void destroy() {
-		System.out.println("In destroy() of class SimpleClass");		
+		System.out.println("In destroy() of class SimpleClass");
 	}
-	
+
 	public void setByteVal(byte byteVal) {
 		this.byteVal = byteVal;
 	}
@@ -118,13 +118,13 @@ public class SimpleClass extends SimpleClassParent{
 		super();
 		this.byteVal = byteVal;
 	}
-	
+
 	public SimpleClass(byte byteVal, short shortVal) {
 		super();
 		this.byteVal = byteVal;
 		this.shortVal = shortVal;
 	}
-	
+
 	public SimpleClass(byte byteVal, short shortVal, int intVal, long longVal) {
 		super();
 		this.byteVal = byteVal;
@@ -132,7 +132,7 @@ public class SimpleClass extends SimpleClassParent{
 		this.intVal = intVal;
 		this.longVal = longVal;
 	}
-	
+
 	public SimpleClass(byte byteVal, short shortVal, int intVal, long longVal, String stringVal) {
 		super();
 		this.byteVal = byteVal;
@@ -152,7 +152,7 @@ public class SimpleClass extends SimpleClassParent{
 		this.stringVal = stringVal;
 		this.floatVal = floatVal;
 	}
-	
+
 	public SimpleClass(byte byteVal, short shortVal, int intVal, long longVal, String stringVal,
 			float floatVal, double doubleval) {
 		super();
@@ -191,41 +191,41 @@ public class SimpleClass extends SimpleClassParent{
 		this.charVal = charVal;
 		this.boolVal = boolVal;
 	}
-	
+
 
 	public SimpleClass(List listVal, Map mapVal) {
 		super();
 		this.listVal = listVal;
 		this.mapVal = mapVal;
-	}	
+	}
 
 	public SimpleClass(Properties props) {
 		super();
 		this.props = props;
 	}
-	
+
 	public SimpleClass(Vector vector) {
 		super();
 		this.vector = vector;
 	}
-	
+
 	public SimpleClass(Object objectVal) {
 		super();
 		this.objectVal = objectVal;
 	}
-	
+
 	public String toString() {
 		String value = ""+byteVal + COLON + shortVal + COLON + intVal+COLON+longVal+COLON+stringVal
 		+ COLON + floatVal + COLON + doubleVal + COLON + StringEscapeUtils.escapeJava(String.valueOf(charVal)) + COLON + boolVal;
-		if (listVal != null) 
+		if (listVal != null)
 			value += COLON + listVal;
-		if (mapVal != null) 
+		if (mapVal != null)
 			value += COLON + mapVal;
-		if (props != null) 
-			value += COLON + props;	
+		if (props != null)
+			value += COLON + props;
 		if (vector != null)
 			value += COLON + vector;
 		return value;
 	}
-	
+
 }

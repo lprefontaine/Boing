@@ -12,6 +12,6 @@
   (testing
     "Load a property file using an input stream"
     (is (= (dk/slurp* (get-input-stream "test.properties"))
-           "prop1=1\r\nprop2=2\r\nprop3=3\r\nprop4=4\r\n"))       
+           "prop1=1\r\nprop2=2\r\nprop3=3\r\nprop4=4\r\n"))
     (is (= (dk/slurp* (get-input-stream "file:/home/lprefontaine/workspaces/DSLs/boing/resources-test/test.properties"))
            "prop1=1\r\nprop2=2\r\nprop3=3\r\nprop4=4\r\n"))))

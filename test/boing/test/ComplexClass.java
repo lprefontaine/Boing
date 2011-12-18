@@ -9,12 +9,12 @@ public class ComplexClass {
 		super();
 		this.simpleBeanOne = simpleBeanOne;
 	}
-	
+
 	public ComplexClass(SimpleClass simpleBeanOne) {
 		super();
 		this.simpleBeanOne = simpleBeanOne;
 	}
-	
+
 	public ComplexClass(SimpleClass simpleBeanOne, SimpleClass simpleBeanTwo) {
 		super();
 		this.simpleBeanOne = simpleBeanOne;
@@ -32,12 +32,12 @@ public class ComplexClass {
 	public String toString() {
 		return simpleBeanOne + COLON + simpleBeanTwo;
 	}
-	
+
 	public void init() {
 		System.out.println("In init() of class ComplexClass");
 	}
-	
+
 	public void destroy() {
-		System.out.println("In destroy() of class ComplexClass");		
+		System.out.println("In destroy() of class ComplexClass");
 	}
 }

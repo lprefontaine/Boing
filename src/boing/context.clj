@@ -1,13 +1,10 @@
 (ns boing.context
-  (:use
-    [boing.resource]
-    [clojure.contrib.def]
-    [clojure.contrib.trace]))
+  (:use [boing.resource]))
 
 (defrecord Context [id aliases beandefs])
 
-(defvar- *contexts* (atom {:default (Context. :default {} {})}))
-(defvar *current-context* :default)  ;; This can be rebound on the fly
+(def ^{:private true :dynamic true} *contexts* (atom {:default (Context. :default {} {})}))
+(def ^{:dynamic true} *current-context* :default)  ;; This can be rebound on the fly
 
 (defn get-context
   "Returns the given context by its id, throws an exception otherwise"

@@ -53,5 +53,9 @@ local.properties
 .loadpath
 .springBeans
 
+# Leiningen
+.lein-deps-sum
+.lein-failures
+
 # CDT-specific
 .cproject

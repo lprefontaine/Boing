@@ -6,7 +6,7 @@
       "Instantiate singleton"
       (with-context :my-ctx
 	      (let [singleton (defbean :test-bean-1 boing.test.SimpleClass :mode :singleton
-	                         :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true])
+	                         :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2) \H true])
 	            alien-singleton 
 	            (with-context :my-ctx
 	              (defbean :test-bean-1 boing.test.SimpleClass :mode :singleton

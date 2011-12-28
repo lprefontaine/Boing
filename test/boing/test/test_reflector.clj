@@ -1,5 +1,5 @@
 (ns boing.test.test-reflector
-    (:use [boing.core.reflector] [clojure.test] [clojure.contrib.trace]))
+    (:use [boing.core.reflector] [boing.bean :only [jbyte jshort jint]] [clojure.test]))
 
 
 (deftest test-find []
@@ -12,7 +12,7 @@
             :mapVal "setMapVal", :objectVal "setObjectVal", :privateParentVal "setPrivateParentVal",
             :props "setProps", :shortVal "setShortVal", :stringVal "setStringVal", :vector "setVector"} ))
     
-    (is (= (into [] (sort (map #(.getName %) (find-methods boing.test.SimpleClass [(int 1)]))))
+    (is (= (into [] (sort (map #(.getName %) (find-methods boing.test.SimpleClass [(jint 1)]))))
            ["setIntVal" "setPrivateParentVal"]))
     (is (= (into [] (sort (map #(.getName %) (find-methods boing.test.SimpleClass [Integer] "setPrivateParentVal"))))
            ["setPrivateParentVal"]))
@@ -23,11 +23,11 @@
 
 (deftest test-invoke []
   (testing
-    "Testing innvokers"
+    "Testing invokers"
     (let [ctor (first (find-constructors boing.test.SimpleClass [Byte Short]))
           mth (first (find-methods boing.test.SimpleClass [Integer] "setPrivateParentVal"))]
-      (is (= (.toString (invoke-constructor ctor [(byte 1) (short 3)])) "1:3:0:0:null:0.0:0.0:\\u0000:false"))
-      (is (thrown? IllegalArgumentException (invoke-constructor ctor [(byte 1) (int 3)])))
-      )))
+      (is (= (.toString (invoke-constructor ctor [(jbyte 1) (jshort 3)])) "1:3:0:0:null:0.0:0.0:\\u0000:false"))
+      (is (thrown? IllegalArgumentException (invoke-constructor ctor [(jbyte 1) (jint 3)]))))))
+
 
 

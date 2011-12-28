@@ -1,17 +1,16 @@
 (ns boing.test.test-bean-java-api
-  (:use [boing.bean] [boing.context] [clojure.test] [clojure.pprint]
-        [clojure.contrib.trace])
+  (:use [boing.bean] [boing.context] [clojure.test] [clojure.pprint])
   (:import [boing Bean] [java.util Arrays]))
 
 (deftest test-create-bean-constructors []
   (testing
     "Testing bean creation from Java API using only constructors: boing.test.SimpleClass"    
     (let [bean-1 (defbean :test-bean-1 boing.test.SimpleClass)
-          bean-2 (defbean :test-bean-2 boing.test.SimpleClass :c-args [(byte 1)])
+          bean-2 (defbean :test-bean-2 boing.test.SimpleClass :c-args [(jbyte 1)])
           bean-3 (defbean :test-bean-3 boing.test.SimpleClass
-                   :c-args [(byte 1) (short 2) (int 3) (long 4)])
+                   :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4)])
           bean-4  (defbean :test-bean-4 boing.test.SimpleClass
-                    :c-args [(byte 1) (short 2) (int 3) (long 4) "Test String"])]
+                    :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test String"])]
     
       (is (= (.toString (Bean/createBean "test-bean-1")) "0:0:0:0:null:0.0:0.0:\\u0000:false"))
       (is (= (.toString (Bean/createBean "test-bean-2")) "1:0:0:0:null:0.0:0.0:\\u0000:false"))
@@ -22,9 +21,9 @@
   (testing
     "Testing bean creation using an empty constructor and setters: boing.test.SimpleClass"
     (let [bean-1 (defbean :test-bean-1 boing.test.SimpleClass
-                         :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})
+                         :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})
           bean-2 (defbean :test-bean-2 boing.test.SimpleClass
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})]
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})]
       (is (= (.toString (Bean/createBean "test-bean-1"))
              "1:2:3:4:This is a test:0.0:0.0:\\u0000:false"))
       (is (= (.toString (Bean/createBean "test-bean-2"))
@@ -34,9 +33,9 @@
     (testing
       "Testing bean creation referring to other beans"
       (let [first-bean (defbean :test-bean-1 boing.test.SimpleClass
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
             second-bean (defbean :test-bean-2 boing.test.SimpleClass
-                          :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})
+                          :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})
             complex-bean (create-bean (defbean :test-complex-bean-1 boing.test.ComplexClass
                    :s-vals {:simpleBeanOne first-bean
                                 :simpleBeanTwo second-bean}))]
@@ -45,9 +44,9 @@
     (testing
       "Testing beans creation referring to other anonymous beans"
       (let [first-bean (defabean boing.test.SimpleClass
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
             second-bean (defabean boing.test.SimpleClass
-                          :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})
+                          :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})
             complex-bean (defbean :test-complex-bean-2 boing.test.ComplexClass
                                 :s-vals {:simpleBeanOne first-bean
                                 :simpleBeanTwo second-bean})]
@@ -58,11 +57,11 @@
     (testing
       "Testing singleton creation using setters"
       (let [singleton (defbean :test-bean-singleton-1 boing.test.SimpleClass :mode :singleton
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
             alien-singleton 
             (with-context :my-ctx
               (defbean :test-bean-singleton-1 boing.test.SimpleClass :mode :singleton
-                :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true}))]
+                :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true}))]
         (is (= (.hashCode (Bean/createBean "test-bean-singleton-1")) (.hashCode (Bean/createBean "test-bean-singleton-1"))))
         (is (= (.hashCode (Bean/createBeanFromContext "my-ctx" "test-bean-singleton-1")) (.hashCode (Bean/createBeanFromContext "my-ctx" "test-bean-singleton-1"))))
         (is (not (= (.hashCode (Bean/createBean "test-bean-singleton-1")) (.hashCode (Bean/createBeanFromContext "my-ctx" "test-bean-singleton-1"))))))))
@@ -71,11 +70,11 @@
     (testing
       "Testing singleton creation using constructor"
       (let [singleton (defbean :test-bean-singleton-1 boing.test.SimpleClass :mode :singleton
-                         :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true])
+                         :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2) \H true])
             alien-singleton 
             (with-context :my-ctx
               (defbean :test-bean-singleton-1 boing.test.SimpleClass :mode :singleton
-                :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true]))]
+                :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2) \H true]))]
         (is (= (.hashCode (Bean/createBean "test-bean-singleton-1")) (.hashCode (Bean/createBean "test-bean-singleton-1"))))
         (is (= (.hashCode (Bean/createBeanFromContext "my-ctx" "test-bean-singleton-1")) (.hashCode (Bean/createBeanFromContext "my-ctx" "test-bean-singleton-1"))))
         (is (not (= (.hashCode (Bean/createBean "test-bean-singleton-1")) (.hashCode (Bean/createBeanFromContext "my-ctx" "test-bean-singleton-1"))))))))
@@ -104,15 +103,17 @@
   (testing
     "Test instantiation using value overrides"
     (let [first-bean (defbean :test-bean-1 boing.test.SimpleClass 
-                       :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                       :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
           second-bean (defbean :test-bean-2 boing.test.SimpleClass 
-                        :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})
+                        :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})
           complex-bean (defbean :test-complex-bean-2 boing.test.ComplexClass
                          :s-vals {:simpleBeanOne first-bean
                                   :simpleBeanTwo second-bean})
-          local-overrides (Arrays/asList (to-array ["byteVal" (byte 3)]))
+          local-overrides (Arrays/asList (to-array ["byteVal" (jbyte 3)]))
           global-overrides (Arrays/asList (to-array ["test-bean-1" (Arrays/asList (to-array [ "charVal" \Y]))]))]
       (is (= (.toString (Bean/createBean "test-bean-2")) "1:2:3:4:This is a test:0.0:0.0:\\u0000:false" ))
       (is (= (.toString (Bean/createBean "test-bean-2" local-overrides)) "3:2:3:4:This is a test:0.0:0.0:\\u0000:false"))
       (is (= (.toString (Bean/createBean "test-bean-2" nil global-overrides)) "1:2:3:4:This is a test:0.0:0.0:\\u0000:false"))
       (is (= (.toString (Bean/createBean "test-complex-bean-2" nil global-overrides)) "0:0:0:0:null:2.3:3.4:Y:true:1:2:3:4:This is a test:0.0:0.0:\\u0000:false" )))))
+
+                          

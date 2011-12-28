@@ -2,13 +2,12 @@
   "Reflection utility routines"
   (:require [clojure.string :as s])
   (:use
-    [clojure.pprint] [clojure.stacktrace]
-    [clojure.contrib.def])
+    [clojure.pprint] [clojure.stacktrace])
   (:import [java.lang.reflect Modifier InvocationTargetException] [boing.core Util]))
 
 
-(defvar- +setter-prefixes+ ["set" "add"])
-(defvar- +array-fn+
+(def ^{:private true} +setter-prefixes+ ["set" "add"])
+(def ^{:private true} +array-fn+
   {
    (Class/forName "[Ljava.lang.String;") (fn [s] (into-array String s))
    (Class/forName "[I") (fn [s] (int-array s))
@@ -22,7 +21,7 @@
    })
 
 
-(defvar- *reflection-cache* (atom {}))
+(def ^{:private true :dynamic true} *reflection-cache* (atom {}))
 
 (defn- get-reflection-info
   "Extract from the cache the required item for the given class."

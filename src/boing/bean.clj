@@ -3,10 +3,7 @@
    Beans can be defined using defbean or defabean.
    Bean definitions trigger a search for constructors and setters of the given class.
    Instanciation of a bean can be done using create-bean on a bean definition."
-  (:use
-    [boing.core.reflector] [boing.context] [boing.resource] [clojure.stacktrace]
-    [clojure.contrib.def]
-    [clojure.contrib.trace])
+  (:use [boing.core.reflector] [boing.context] [boing.resource] [clojure.tools.trace] [clojure.stacktrace])
   (:require [clojure.string :as s])
   (:gen-class :name boing.Bean
               :methods [#^{:static true} [loadBeandefs [Object] void]
@@ -22,12 +19,39 @@
                         #^{:static true} [createSingletons [String java.util.List] java.util.Map]
                         #^{:static true} [setDebug [java.lang.Boolean] void]]))
 
-(defvar- *runtime-overrides* {})
-(defvar- *aliases* {})
-(defvar- *current-bean* nil)
-(defvar- *depth* 0)
-(defvar- *debug-mode* (atom false))
-(defvar- *singletons* (atom {}))
+(def ^{:private true :dynamic true} *runtime-overrides* {})
+(def ^{:private true :dynamic true} *aliases* {})
+(def ^{:private true :dynamic true} *current-bean* nil)
+(def ^{:private true :dynamic true} *depth* 0)
+(def ^{:private true :dynamic true} *debug-mode* (atom false))
+(def ^{:private true :dynamic true} *singletons* (atom {}))
+(def ^{:private true :dynamic true} *post-clojure12*
+  (cond (and (= (:major *clojure-version*) 1) (<= (:minor *clojure-version*) 2)) false
+        :else true))
+
+(defn jbyte
+  "Fn to hide 1.2 vs 1.3 numeric changes, avoid promotion to long."
+  [x] (if *post-clojure12* (Byte. (byte x)) (byte x)))
+
+(defn jshort
+  "Fn to hide 1.2 vs 1.3 numeric changes, avoid promotion to long."
+  [x] (if *post-clojure12* (Short. (short x)) (short x)))
+
+(defn jint
+  "Fn to hide 1.2 vs 1.3 numeric changes, avoid promotion to long."  
+  [x] (if *post-clojure12* (Integer. (int x)) (int x)))
+
+(defn jlong
+  "Fn to hide 1.2 vs 1.3 numeric changes, avoid promotion to long." 
+  [x] (long x))
+
+(defn jfloat
+  "Fn to hide 1.2 vs 1.3 numeric changes, avoid promotion to double." 
+  [x] (if *post-clojure12* (Float. (float x)) (float x)))
+
+(defn jdouble
+  "Fn to hide 1.2 vs 1.3 numeric changes, avoid promotion to double." 
+  [x] (double x))
 
 (declare allocate-bean)
 
@@ -342,15 +366,20 @@
   `(do (add-context ~ctx-id)
      (binding [*current-context* ~ctx-id *aliases* ~aliases]
        ~@body))))
+ 
+(defn munge-class [cl]
+  (cond (class? cl) cl
+        (string? cl) (Class/forName cl)
+        (keyword? cl) (Class/forName (name cl))
+        :else (throw (Exception. (format "Cannot convert %s to class" cl)))))
 
 (defn auto-promote
   "Extends the BoingReflector protocol to auto promote Clojure arguments
    to Java alternatives."
   [extended-class target-class impl]
-  (extend-type extended-class
-    BoingReflector
-    (to-java-arg
-      [this target-class] (impl this target-class))))
+  (do (extend-type (munge-class extended-class) BoingReflector
+        (to-java-arg
+          [this target-class] (impl this target-class)))))
 
 (defn- eval-beandefs
   "Evaluate bean definitions in the current context from the given resource(s).

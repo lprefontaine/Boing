@@ -13,8 +13,7 @@
 
    In this example, we are using the default context (:default)"
   
-  (:use [boing.bean] [boing.context] [boing.resource]
-        [clojure.contrib.def]))
+  (:use [boing.bean] [boing.context] [boing.resource]))
 
 (set! *warn-on-reflection* true)
 

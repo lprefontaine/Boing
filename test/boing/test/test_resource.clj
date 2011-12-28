@@ -1,6 +1,5 @@
 (ns boing.test.test-resource
-  (:require [clojure.contrib.duck-streams :as dk])
-  (:use [boing.bean] [boing.resource]  [clojure.test]))
+  (:use [boing.bean] [boing.resource] [clojure.test]))
 
 (deftest test-load-properties []
   (testing
@@ -11,7 +10,7 @@
 (deftest test-input-stream []
   (testing
     "Load a property file using an input stream"
-    (is (= (dk/slurp* (get-input-stream "test.properties"))
+    (is (= (slurp (get-input-stream "test.properties"))
            "prop1=1\r\nprop2=2\r\nprop3=3\r\nprop4=4\r\n"))       
-    (is (= (dk/slurp* (get-input-stream "file:/home/lprefontaine/workspaces/DSLs/boing/resources-test/test.properties"))
+    (is (= (slurp (get-input-stream "file:/home/lprefontaine/workspaces/DSLs/boing/resources-test/test.properties"))
            "prop1=1\r\nprop2=2\r\nprop3=3\r\nprop4=4\r\n"))))

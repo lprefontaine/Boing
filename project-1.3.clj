@@ -6,6 +6,7 @@
   :javac-target "1.5"
   :warn-on-reflection false
   :target-dir "target/"
+    :jar-name "boing-1.3.0.jar" 
   :clean-non-project-classes true
   :manifest {"Built-By" "build-manager"
              "Specification-Title" "Boing library"

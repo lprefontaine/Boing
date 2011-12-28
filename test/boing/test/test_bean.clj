@@ -1,6 +1,5 @@
 (ns boing.test.test-bean
-  (:use [boing.bean] [boing.context] [clojure.test] [clojure.pprint]
-        [clojure.contrib.trace]))
+  (:use [boing.bean] [boing.context] [clojure.test] [clojure.pprint]))
 
 (deftest test-noargs-beandef []
   (testing
@@ -15,19 +14,19 @@
              (defbean :test-bean-1 :boing.test.SimpleClass)) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 :boing.test.SimpleClass
-               :c-args [(byte 1)])) boing.test.SimpleClass))
+               :c-args [(jbyte 1)])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 :boing.test.SimpleClass
-               :c-args [(byte 1) (short 2) (int 3) (long 4)])) boing.test.SimpleClass))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4)])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 :boing.test.SimpleClass
-               :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string"])) boing.test.SimpleClass))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string"])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 :boing.test.SimpleClass
-               :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2)])) boing.test.SimpleClass))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2)])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 :boing.test.SimpleClass
-               :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true])) boing.test.SimpleClass))))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2) \H true])) boing.test.SimpleClass))))
 
 (deftest test-string-constructor-beandef []
   (testing
@@ -36,19 +35,19 @@
              (defbean :test-bean-1 "boing.test.SimpleClass")) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 "boing.test.SimpleClass"
-               :c-args [(byte 1)])) boing.test.SimpleClass))
+               :c-args [(jbyte 1)])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 "boing.test.SimpleClass"
-               :c-args [(byte 1) (short 2) (int 3) (long 4)])) boing.test.SimpleClass))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4)])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 "boing.test.SimpleClass"
-               :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string"])) boing.test.SimpleClass))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string"])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 "boing.test.SimpleClass"
-               :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2)])) boing.test.SimpleClass))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2)])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 "boing.test.SimpleClass"
-               :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true])) boing.test.SimpleClass))))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2) \H true])) boing.test.SimpleClass))))
 
 (deftest test-constructor-properties []
   (testing
@@ -57,19 +56,19 @@
              (defbean :test-bean-1 boing.test.SimpleClass)) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 boing.test.SimpleClass
-               :c-args [(byte 1)])) boing.test.SimpleClass))
+               :c-args [(jbyte 1)])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 boing.test.SimpleClass
-               :c-args [(byte 1) (short 2) (int 3) (long 4)])) boing.test.SimpleClass))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4)])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 boing.test.SimpleClass
-               :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string"])) boing.test.SimpleClass))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string"])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 boing.test.SimpleClass
-               :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2)])) boing.test.SimpleClass))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2)])) boing.test.SimpleClass))
     (is (= (:java-class
              (defbean :test-bean-1 boing.test.SimpleClass
-               :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true])) boing.test.SimpleClass))))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2) \H true])) boing.test.SimpleClass))))
 
 (deftest test-constructor-w-options []
   (testing
@@ -86,33 +85,33 @@
              (create-bean (defbean :test-bean-1 boing.test.SimpleClass))) "0:0:0:0:null:0.0:0.0:\\u0000:false"))
     (is (= (.toString
              (create-bean (defbean :test-bean-1 boing.test.SimpleClass
-               :c-args [(byte 1)]))) "1:0:0:0:null:0.0:0.0:\\u0000:false"))
+               :c-args [(jbyte 1)]))) "1:0:0:0:null:0.0:0.0:\\u0000:false"))
     (is (= (.toString
              (create-bean (defbean :test-bean-1 boing.test.SimpleClass
-               :c-args [(byte 1) (short 2) (int 3) (long 4)]))) "1:2:3:4:null:0.0:0.0:\\u0000:false"))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4)]))) "1:2:3:4:null:0.0:0.0:\\u0000:false"))
     (is (= (.toString
              (create-bean (defbean :test-bean-1 boing.test.SimpleClass
-               :c-args [(byte 1) (short 2) (int 3) (long 4) "Test String"]))) "1:2:3:4:Test String:0.0:0.0:\\u0000:false" ))))
+               :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test String"]))) "1:2:3:4:Test String:0.0:0.0:\\u0000:false" ))))
 
 (deftest test-create-bean-w-setters []
   (testing
     "Testing bean creation using an empty constructor and setters: boing.test.SimpleClass"
     (is (= (.toString
              (create-bean (defbean :test-bean-1 boing.test.SimpleClass
-                         :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})))
+                         :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})))
           "1:2:3:4:This is a test:0.0:0.0:\\u0000:false"))
     (is (= (.toString
              (create-bean (defbean :test-bean-1 boing.test.SimpleClass
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})))
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})))
           "0:0:0:0:null:2.3:3.4:H:true"))))
 
 (deftest test-complex-w-setters[]
     (testing
       "Testing bean creation referring to other beans"
       (let [first-bean (defbean :test-bean-1 boing.test.SimpleClass
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
             second-bean (defbean :test-bean-2 boing.test.SimpleClass
-                          :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})]
+                          :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})]
         (is (= (:java-class
                  (defbean :test-bean-2 boing.test.ComplexClass
                    :s-vals {:simpleBeanOne first-bean
@@ -120,9 +119,9 @@
     (testing
       "Testing beans creation referring to other anonymous beans"
       (let [first-bean (defabean boing.test.SimpleClass
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
             second-bean (defabean boing.test.SimpleClass
-                          :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})]
+                          :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})]
         (is (= (:java-class
                  (defbean :test-bean-2 boing.test.ComplexClass
                    :s-vals {:simpleBeanOne first-bean
@@ -131,9 +130,9 @@
     (testing
       "Testing bean creation referring to other beans"
       (let [first-bean (defbean :test-bean-1 boing.test.SimpleClass
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
             second-bean (defbean :test-bean-2 boing.test.SimpleClass
-                          :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})]
+                          :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})]
         (is (= (.toString
                  (create-bean (defbean :test-complex-bean-1 boing.test.ComplexClass
                    :s-vals {:simpleBeanOne first-bean
@@ -141,9 +140,9 @@
     (testing
       "Testing beans creation referring to other anonymous beans"
       (let [first-bean (defabean boing.test.SimpleClass
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
             second-bean (defabean boing.test.SimpleClass
-                          :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})]
+                          :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})]
         (is (= (.toString
                  (create-bean (defbean :test-complex-bean-2 boing.test.ComplexClass
                                 :s-vals {:simpleBeanOne first-bean
@@ -153,11 +152,11 @@
     (testing
       "Testing singleton creation using setters"
       (let [singleton (defbean :test-singleton-1 boing.test.SimpleClass :mode :singleton
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
             alien-singleton 
             (with-context :my-ctx
               (defbean :test-singleton-1 boing.test.SimpleClass :mode :singleton
-                :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true}))]
+                :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true}))]
         (is (= (.hashCode (create-bean singleton)) (.hashCode (create-bean singleton))))
         (with-context :my-ctx
           (is (= (.hashCode (create-bean alien-singleton)) (.hashCode (create-bean alien-singleton))))))))
@@ -166,11 +165,11 @@
     (testing
       "Testing singleton creation using constructor"
       (let [singleton (defbean :test-singleton-1 boing.test.SimpleClass :mode :singleton
-                         :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true])
+                         :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2) \H true])
             alien-singleton 
             (with-context :my-ctx
               (defbean :test-singleton-1 boing.test.SimpleClass :mode :singleton
-                :c-args [(byte 1) (short 2) (int 3) (long 4) "Test string" (float 1.1) (double 1.2) \H true]))]
+                :c-args [(jbyte 1) (jshort 2) (jint 3) (jlong 4) "Test string" (jfloat 1.1) (jdouble 1.2) \H true]))]
         (is (= (.hashCode (create-bean singleton)) (.hashCode (create-bean singleton))))
         (with-context :my-ctx
           (is (= (.hashCode (create-bean alien-singleton)) (.hashCode (create-bean alien-singleton)))))
@@ -181,9 +180,9 @@
     (testing
       "Testing bean creation with bean references using setters"
       (let [first-bean (defbean :test-bean-1 boing.test.SimpleClass
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
             second-bean (defbean :test-bean-2 boing.test.SimpleClass
-                          :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})]
+                          :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})]
         (is (= (.toString
                  (create-bean (defbean :test-complex-bean-1 boing.test.ComplexClass
                                 :s-vals {:simpleBeanOne :test-bean-1 :simpleBeanTwo :test-bean-2})))
@@ -194,9 +193,9 @@
     (testing
       "Testing bean creation with bean references using constructor"
       (let [first-bean (defbean :test-bean-1 boing.test.SimpleClass
-                         :s-vals {:floatVal (float 2.3) :doubleVal (double 3.4) :charVal \H :boolVal true})
+                         :s-vals {:floatVal (jfloat 2.3) :doubleVal (jdouble 3.4) :charVal \H :boolVal true})
             second-bean (defbean :test-bean-2 boing.test.SimpleClass
-                          :s-vals {:byteVal (byte 1) :shortVal (short 2) :intVal (int 3) :longVal (long 4) :stringVal "This is a test"})]
+                          :s-vals {:byteVal (jbyte 1) :shortVal (jshort 2) :intVal (jint 3) :longVal (jlong 4) :stringVal "This is a test"})]
         (is (= (.toString
                  (create-bean (defbean :test-complex-bean-1 boing.test.ComplexClass
                                 :c-args [:test-bean-1 :test-bean-2])))
@@ -205,19 +204,19 @@
 (deftest test-setters-closures []
     (testing
       "Test bean creation with closures using setters"
-      (let [dbl 7.8
-            nb 5
+      (let [dbl (jdouble 7.8)
+            nb (jint 5)
             first-bean (defabean boing.test.SimpleClass
-                         :s-vals {:intVal (fn [] nb) :floatVal (float 2.3) :doubleVal (fn [] dbl) :charVal \H :boolVal true})]
+                         :s-vals {:intVal (fn [] (jint nb)) :floatVal (jfloat 2.3) :doubleVal (fn [] (jdouble dbl)) :charVal \H :boolVal true})]
         (is (= (.toString (create-bean first-bean)) "0:0:5:0:null:2.3:7.8:H:true")))))
 
 (deftest test-constructor-closures []
     (testing
       "Test bean creation with closures using constructors"
-      (let [dbl 7.8
-            nb 5
+      (let [dbl (jdouble 7.8)
+            nb (jint 5)
             first-bean (defabean boing.test.SimpleClass
-                         :c-args [(byte 0) (short 0) (fn [] nb) (long 0) "test" (float 2.3) (fn [] dbl) \H  true])]
+                         :c-args [(jbyte 0) (jshort 0) (fn [] (jint nb)) (jlong 0) "test" (jfloat 2.3) (fn [] (jdouble dbl)) \H  true])]
         (is (= (.toString (create-bean first-bean)) "0:0:5:0:test:2.3:7.8:H:true")))))
 
 (deftest test-setters-maps-and-lists []
@@ -295,9 +294,9 @@
     (let [ctx (keyword (gensym "ctx-"))]  ;; To make sure we have a fresh context at each test run
       (with-context-aliases ctx {:b :byteVal :i :intVal :f :floatVal}
         (let [first-bean (defbean :test-bean-2 boing.test.SimpleClass
-                           :s-vals {:b (byte 1) :i (int 3) :f (float 4.3)})]
+                           :s-vals {:b (jbyte 1) :i (jint 3) :f (jfloat 4.3)})]
         (is (= (.toString (create-bean first-bean)) "1:0:3:0:null:4.3:0.0:\\u0000:false"))
-        (is (= (.toString (create-bean first-bean {:b (byte 3)})) "3:0:3:0:null:4.3:0.0:\\u0000:false")))))))
+        (is (= (.toString (create-bean first-bean {:b (jbyte 3)})) "3:0:3:0:null:4.3:0.0:\\u0000:false")))))))
 
 (deftest test-auto-promotion []
   (testing
@@ -315,7 +314,7 @@
             :else this)))
       (with-context ctx 
         (let [first-bean (defbean :test-bean-1 boing.test.SimpleClass
-                           :s-vals {:byteVal (byte 1) :intVal (int 3) :longVal (long 4)})
+                           :s-vals {:byteVal (jbyte 1) :intVal (jint 3) :longVal (jlong 4)})
               second-bean (defbean :test-bean-2 boing.test.SimpleClass
                            :s-vals {:props :test-bean-1})]
         (is (= (.toString (create-bean second-bean)) "0:0:0:0:null:0.0:0.0:\\u0000:false:{byte value=1, long value=4}")))))))

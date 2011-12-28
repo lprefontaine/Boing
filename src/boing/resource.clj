@@ -1,7 +1,7 @@
 (ns boing.resource
   "This module provides a basic interface to resource loading."
   (:require [clojure.string :as s])
-  (:use [clojure.stacktrace] [clojure.java.io] [clojure.contrib.trace])
+  (:use [clojure.stacktrace] [clojure.java.io])
   (:import [java.util.jar JarFile] [java.net URLDecoder]
            [java.lang ClassLoader] [java.io File] [java.util Properties]))
 

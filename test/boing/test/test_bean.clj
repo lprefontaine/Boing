@@ -247,7 +247,6 @@
                          :s-vals {:props mapval})]
         (is (= (.toString (create-bean first-bean)) "0:0:0:0:null:0.0:0.0:\\u0000:false:{b=2, a=1}")))))
 
-
 (deftest test-constructors-properties-class []
     (testing
       "Test bean creation with Properties autopromotion using constructors"

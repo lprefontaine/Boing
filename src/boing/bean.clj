@@ -3,7 +3,7 @@
    Beans can be defined using defbean or defabean.
    Bean definitions trigger a search for constructors and setters of the given class.
    Instanciation of a bean can be done using create-bean on a bean definition."
-  (:use [boing.core.reflector] [boing.context] [boing.resource] [clojure.tools.trace] [clojure.stacktrace])
+  (:use [boing.core.reflector] [boing.context] [boing.resource] [clojure.stacktrace])
   (:require [clojure.string :as s])
   (:gen-class :name boing.Bean
               :methods [#^{:static true} [loadBeandefs [Object] void]

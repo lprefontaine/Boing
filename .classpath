@@ -12,7 +12,7 @@
 	<classpathentry kind="lib" path="/opt/higiebus/apps/libraries/ehcache-1.4.1.jar"/>
 	<classpathentry kind="lib" path="/opt/higiebus/apps/libraries/hibernate-3.2.5.ga.jar"/>
 	<classpathentry kind="lib" path="/opt/higiebus/apps/libraries/spring-2.5.5.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Clojure1.3"/>
 	<classpathentry kind="lib" path="/opt/higiebus/apps/libraries/tools.trace-0.7.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Clojure1.2"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

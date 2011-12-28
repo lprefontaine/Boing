@@ -8,6 +8,11 @@
   :target-dir "target/"
   :jar-name "boing-1.2.2.jar" 
   :clean-non-project-classes true
+  :class-file-whitelist #"boing/"
+  :license {:name "Eclipse Public License - v 1.0"
+            :url "http://www.eclipse.org/legal/epl-v10.html"
+            :distribution :repo
+            :comments "same as Clojure"}
   :manifest {"Built-By" "build-manager"
              "Specification-Title" "Boing library"
              "Specification-Version" "1.2"
@@ -16,6 +21,6 @@
              "Implementation-Version" 	"1.2.2"
              "Implementation-Vendor" "SoftAddicts Inc."
              }
-  :omit-source false
+  :omit-source true
   :aot :all
   :dependencies [[org.clojure/clojure "1.2.1"]])

@@ -5,6 +5,8 @@
   (:import [java.util.jar JarFile] [java.net URLDecoder]
            [java.lang ClassLoader] [java.io File] [java.util Properties]))
 
+(def ^{:private true} MAX-EVAL-STRING 65535)
+
 (defn find-url
   "Return the URL of a given resource."
   [respath]
@@ -74,11 +76,18 @@
 (defn load-text-resource
   "Load a resource file as a string."
   [respath & {:keys [encoding from-class]}]
-    (try 
-      (if-let [resource-url (find-url respath)]
-        (with-open [rdr (reader (get-input-stream resource-url :from-class from-class))]
-          (reduce #(str %1 %2) "" (line-seq rdr))))
-      (catch Exception e# (print-cause-trace e#) (throw e#))))
+  (try 
+    (if-let [resource-url (find-url respath)]
+      (with-open [rdr (reader (get-input-stream resource-url :from-class from-class))]
+        (reduce #(str %1 %2) "" (line-seq rdr))))
+    (catch Exception e# (print-cause-trace e#) (throw e#))))
+
+(defn ^{:private true} copy-resource
+  [respath outfile]
+  (try 
+    (if-let [resource-url (find-url respath)]
+      (copy (get-input-stream resource-url) outfile))
+    (catch Exception e# (print-cause-trace e#) (throw e#))))
 
 (defn load-and-eval
   "Load a clojure resource file and evaluate it."
@@ -87,16 +96,19 @@
       (load-and-eval respath (str (.getName *ns*)))
       (catch Exception e# (print-cause-trace e#) (throw e#))))
   ([respath namespace-name]
-    (let [nsname (cond (instance? clojure.lang.Namespace namespace-name) (str (.getName namespace-name))
-                       (instance? String namespace-name) namespace-name
+    (let [new-ns (cond (instance? clojure.lang.Namespace namespace-name) namespace-name
+                       (string? namespace-name) (create-ns (symbol namespace-name))
+                       (symbol? namespace-name) (create-ns namespace-name)
                        :else (throw (Exception. (format "load-and-eval: not a namespace: %s" namespace-name))))
-          file-content (load-text-resource respath)
-          code (str "(in-ns '" nsname ") " file-content " (in-ns '" (.name *ns*) ") ")]
+          file-content (load-text-resource respath)]
       (try
-        (load-string code)
+        (if (< (count file-content) MAX-EVAL-STRING) ;; If the file is bigger than this limit, use a temp file and load from it
+          (binding [*ns* new-ns] (load-string file-content ))
+          (let [tmp-file (File/createTempFile "boing-res", ".clj")
+                _ (copy-resource respath tmp-file)]
+            (binding [*ns* new-ns] (load-file (.toString tmp-file)))))
         (catch Exception e#
-          (spit "/tmp/failed-load.clj" code)
-          (throw (Exception. (format "Failed loading %s: %s: %s characters" respath (.getMessage e#) (count code)))))))))
+          (throw (Exception. (format "Failed loading %s: %s: %s characters" respath (.getMessage e#) (count file-content)))))))))
 
  
       

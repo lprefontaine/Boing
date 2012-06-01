@@ -1,12 +1,11 @@
-(defproject boing "1.3.0"
-  :min-lein-version "1.6.2"
+(defproject boing "1.3.1"
+  :min-lein-version "1.7.1"
   :disable-implicit-clean false
   :java-source-path "src"
   :java-fork true
   :javac-target "1.5"
   :warn-on-reflection false
   :target-dir "target/"
-    :jar-name "boing-1.3.0.jar" 
   :clean-non-project-classes true
   :class-file-whitelist #"boing/"
   :license {:name "Eclipse Public License - v 1.0"
@@ -23,4 +22,5 @@
              }
   :omit-source true
   :aot :all
-  :dependencies [[org.clojure/clojure "1.3.0"]])
+  :dependencies [[org.clojure/clojure "1.3.0"]
+                 [org.clojure/tools.trace "0.7.3"]])

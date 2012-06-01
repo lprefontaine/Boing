@@ -7,7 +7,6 @@ public class ComplexClass {
 
 	public ComplexClass() {
 		super();
-		this.simpleBeanOne = simpleBeanOne;
 	}
 	
 	public ComplexClass(SimpleClass simpleBeanOne) {

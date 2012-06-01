@@ -178,6 +178,14 @@ public class SimpleClass extends SimpleClassParent{
 		this.charVal = charVal;
 	}
 
+	public SimpleClass(float floatVal, double doubleval, char charVal, boolean boolVal) {
+		super();
+		this.floatVal = floatVal;
+		this.doubleVal = doubleval;
+		this.charVal = charVal;
+		this.boolVal = boolVal;
+	}
+	
 	public SimpleClass(byte byteVal, short shortVal, int intVal, long longVal, String stringVal,
 			float floatVal, double doubleval, char charVal, boolean boolVal) {
 		super();

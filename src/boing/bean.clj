@@ -327,7 +327,7 @@
 
 (defn create-singletons
   "Create all the singletons in the current context.
-   This allows to debug eventual instantiation failures instead
+   This allows debugging of eventual instantiation failures instead
    of waiting for a bean instatiation that may occur very late.
    Only global overrides can be provided when calling this fn."
   ([] (create-singletons {}))
@@ -402,7 +402,7 @@
   "Load bean definitions from a clojure resource type.
    The resource can be a file in the class path or a URL.
    It can be loaded in a named context if required.
-   This is a Java entry point so Java caller can access Boing bean definitions.
+   This is a Java entry point so Java callers can access Boing bean definitions.
    Context name has to be passed as a string since Clojure keywords are unknown to Java."
   ([bean-resources] (eval-beandefs bean-resources))
   ([ctx-name bean-resources] (with-context (to-keyword ctx-name)  (eval-beandefs bean-resources))))

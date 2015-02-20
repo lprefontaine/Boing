@@ -33,7 +33,7 @@
 (defn ^{:private true} get-primitive-class
   "Return the primitive class if any, otherwise return the given class."
   [cl]
-  (if-let [primitive (cl +primitive-classes+)]
+  (if-let [primitive (get +primitive-classes+ cl)]
     primitive
     cl))
 
@@ -45,7 +45,7 @@
       (if-let [item-cached (item (get @*reflection-cache* hashcode))]
         item-cached
         (item (get (swap! *reflection-cache* #(merge %1 %2)
-                          {hashcode (reduce merge {} (bean klass))}) hashcode))))
+                          {hashcode (reduce conj {} (seq (bean klass)))}) hashcode))))
     (catch Exception e# (print-cause-trace e#))))
 
 (defn ^{:private true} update-reflection-info

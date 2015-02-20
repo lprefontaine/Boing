@@ -3,7 +3,7 @@
    Beans can be defined using defbean or defabean.
    Bean definitions trigger a search for constructors and setters of the given class.
    Instanciation of a bean can be done using create-bean on a bean definition."
-  (:use [boing.core.reflector] [boing.context] [boing.resource] [clojure.stacktrace])
+  (:use [boing.core.reflector] [boing.context] [boing.resource] [clojure.stacktrace] [clojure.tools.trace])
   (:require [clojure.string :as s])
   (:gen-class :name boing.Bean
               :methods [#^{:static true} [loadBeandefs [Object] void]
@@ -127,7 +127,7 @@
   (if @*debug-mode* (print-debug "Registering singleton: %s %s" id (.hashCode instance)))
   (swap! *singletons* #(merge %1 %2) { (singleton-name id) {:beandef beandef :instance instance}}))
  
-(defn- property-def
+(defn property-def
   "Define a property value to be set at instantiation time"
   [bean-id java-class setters properties pname]
   (let [property-name (or (pname *aliases*) pname)
@@ -143,7 +143,7 @@
              (BeanProperty. setter bean-id  property-name  pname  property
                             (into [] (.getParameterTypes setter)))}))))
 
-(defn- valid-bean-setters?
+(defn valid-bean-setters?
   "Checks if a bean has all the necessary property setters
    for the given property map. Resolve the aliases if they are defined.
    Returns all the setters it found."

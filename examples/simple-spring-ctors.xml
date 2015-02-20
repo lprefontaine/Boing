@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans file:/opt/schemas/spring-beans-2.5.xsd"
+	default-init-method="init" default-destroy-method="destroy">
+	<bean id="test-bean-1"
+		class="boing.test.SimpleClass">
+		<constructor-arg index="0" type="java.lang.byte" value="1"/>
+		<constructor-arg index="1" type="java.lang.short" value="2"/>
+		<constructor-arg index="2" type="java.lang.int" value="3"/>
+		<constructor-arg index="3" type="java.lang.long" value="4"/>
+	</bean>
+	<bean id="test-bean-2"
+		class="boing.test.SimpleClass">
+		<constructor-arg index="0" type="java.lang.float" value="1.1"/>
+		<constructor-arg index="1" type="java.lang.double" value="2.3"/>
+		<constructor-arg index="2" type="java.lang.char" value="A"/>
+		<constructor-arg index="3" type="java.lang.boolean" value="true"/>
+	</bean>
+	
+	<bean id="bean-parent"
+		class="boing.test.ComplexClass">
+		<property name="simpleBeanOne" ref="test-bean-1" />
+		<property name="simpleBeanTwo" ref="test-bean-2" />
+	</bean>
+
+
+</beans>

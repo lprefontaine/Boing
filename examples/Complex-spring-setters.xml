@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans file:/opt/schemas/spring-beans-2.5.xsd"
+	default-init-method="init" default-destroy-method="destroy">
+
+	<bean id="test-bean-1"
+		class="boing.test.SimpleClass">
+		<property name="byteVal" value="1"/>
+		<property name="shortVal" value="2"/>
+		<property name="intVal" value="3"/>
+		<property name="longVal" value="4"/>
+		<property name="stringVal" value="String value"/> 
+	</bean>
+	<bean id="test-bean-2"
+		class="boing.test.SimpleClass">
+		<property name="doubleVal" value="2.3"/>
+		<property name="floatVal" value="3.4"/>
+	</bean>
+	
+	<bean id="bean-parent"
+		class="boing.test.ComplexClass">
+		<property name="simpleBeanOne" ref="test-bean-1" />
+		<property name="simpleBeanTwo" ref="test-bean-2" />
+	</bean>
+
+
+</beans>
